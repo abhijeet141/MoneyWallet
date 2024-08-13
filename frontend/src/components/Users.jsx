@@ -8,10 +8,15 @@ export function Users(){
     //     lastName: "Sinha"
     // }])
     const [users,setUsers] = useState([])
-    const [filter,setFilter] = useState()
+    const [filter,setFilter] = useState("")
     useEffect(()=>{
-        axios.get(`http://localhost:3000/api/v1/user/bulk?filter=${filter}`)
+        axios.get(`http://localhost:3000/api/v1/user/bulk?filter=${filter}`,{
+            headers:{
+                Authorization: "Bearer " + localStorage.getItem('tokenId')
+            }
+        })
         .then(response =>{
+            console.log(response.data.user)
             setUsers(response.data.user);
         })
     },[filter])
@@ -41,7 +46,7 @@ function User({user}){
         <div>
         <button
         onClick={()=>{
-            navigate(`/send?id=${user._id}&name=${user.firstName}`)
+            navigate(`/send?id=${user._id}&name=${user.firstName}&lastname=${user.lastName}`)
         }}
         type="button" className="text-white bg-gray-800 hover:bg-gray-900 w-32 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 sm:w-40">Send Money</button>
         </div>
