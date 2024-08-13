@@ -84,14 +84,14 @@ router.post('/signin',async(req,res)=>{
     }
 })
 
-const updateBpdy = zod.object({
+const updateBody = zod.object({
     password: zod.string().optional(),
     firstName: zod.string().optional(),
     lastName: zod.string().optional()
 })
 
 router.put('/',userMiddleware,async (req,res)=>{
-    const response = updateBpdy.safeParse(req.body);
+    const response = updateBody.safeParse(req.body);
     if(!response.success){
         res.status(411).json({
             message: "Error while updating information"
@@ -106,8 +106,9 @@ router.put('/',userMiddleware,async (req,res)=>{
     })
 })
 
-router.get('/bulk',async (req,res)=>{
+router.get('/bulk',userMiddleware,async (req,res)=>{
     const filter = req.query.filter || "";
+    console.log(req.userId);
     const users = await User.find({
         $or:[{
             firstName: {
@@ -120,11 +121,11 @@ router.get('/bulk',async (req,res)=>{
         }]
     })
     res.json({
-        user: users.map(user => ({
+        user: users.filter(user => req.userId.toString() != user._id.toString()).map(user => ({
             username: user.username,
             firstName: user.firstName,
             lastName: user.lastName,
-            _id: user._id
+            _id: user._id        
         }))
     })
 })

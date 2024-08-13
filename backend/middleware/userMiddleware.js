@@ -15,7 +15,9 @@ async function userMiddleware(req,res,next){
         req.username = response.username
         const user = await User.findOne({
             username: req.username
-        })        
+        })    
+        req.firstName = user.firstName;    
+        req.lastName = user.lastName;    
         req.userId = user._id;
         console.log(req.userId);
         next();

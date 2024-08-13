@@ -25,9 +25,10 @@ async function userValidation(req,res,next){
             username: user.username
         })
         if(existingUser){
-            res.status(404).json({
+            res.json({
                 message: "User already exists please login"
             })
+            return;
         }
         else{
             next();
