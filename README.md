@@ -1,4 +1,4 @@
-# Bank Application
+# MoneyWallet Web Application
 
 ## Project Overview
 
