@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom"
 import {useState} from "react"
 import { Navigation } from "../components/Navigation"
 import axios from "axios"
+import swal from 'sweetalert';
+
 
 export function SignUp(){
     const [firstName, setFirstName] = useState("")
@@ -51,11 +53,15 @@ export function SignUp(){
                     <div className="flex justify-center">
                         <Button onClick = {async()=>{
                             if (!firstName || !lastName || !username || !password) {
-                                alert("Please fill out all required fields.");
+                                swal("Please fill out all required fields.","","error");
                                 return;
                               }
                             if(!validateEmail(username)){
-                                alert("Please enter a valid email address.");
+                                swal("Please enter a valid email address.","","error");
+                                return;
+                            }
+                            if(password.length < 8){
+                                swal("Your password should be greater than 8","","error");
                                 return;
                             }
                              try {
@@ -69,6 +75,7 @@ export function SignUp(){
                                     alert(response.data.message);
                                     return;
                                 }
+                                console.log(response);
                                 localStorage.setItem("tokenId", response.data.token);
                                 navigate("/dashboard");
                               } catch (error) {

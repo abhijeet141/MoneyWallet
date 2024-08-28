@@ -5,7 +5,7 @@ const schema = zod.object({
     username: zod.string().email(),
     firstName: zod.string(),
     lastName: zod.string(),
-    password: zod.string()
+    password: zod.string().min(8).max(32)
 })
 
 async function userValidation(req,res,next){

@@ -5,6 +5,7 @@ import { SignIn } from './pages/SignIn'
 import { Dashboard } from './pages/Dashboard'
 import { SendMoney } from './pages/SendMoney'
 import { HomePage } from './pages/HomePage'
+import { Err } from './pages/404'
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
         }></Route>
         <Route path='/dashboard' element={<Dashboard></Dashboard>}></Route>
         <Route path='/send' element={<SendMoney></SendMoney>}></Route>
+        <Route path="/*" element={<Err />} />
       </Routes>
       </BrowserRouter>
     </div>

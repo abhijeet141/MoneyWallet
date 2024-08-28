@@ -1,6 +1,8 @@
 import {useState} from "react"
 import { useSearchParams, useNavigate } from "react-router-dom"
 import axios from "axios"
+import swal from 'sweetalert';
+
 export function SendMoney(){
     const [amount,setAmount] = useState()
     const [searchParams] = useSearchParams()
@@ -40,16 +42,16 @@ export function SendMoney(){
                             Authorization: "Bearer " + localStorage.getItem('tokenId')
                         }
                     })
-                        alert("Transaction Sucessfull")
+                        await swal("Transaction Sucessfull","","success")
                         navigate("/dashboard")
                 }
                 catch(error){
                     if (error.response) {
-                        alert(error.response.data.message);
+                        await swal(error.response.data.message,"","error");
                         navigate("/dashboard")
                     }
                     else{
-                    alert("Transaction Unsucessfull")
+                    await swal("Transaction Unsucessfull","","error")
                     }
                 }
             }}

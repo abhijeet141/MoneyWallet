@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom"
 import {useState} from 'react'
 import { Navigation } from "../components/Navigation"
 import axios from "axios"
+import swal from 'sweetalert';
+
 export function SignIn(){
     const navigate = useNavigate();
     const [username, setUsername] = useState("")
@@ -40,11 +42,11 @@ export function SignIn(){
                     <div className="flex justify-center">
                         <Button onClick={async()=>{
                             if (!username || !password) {
-                                alert("Please fill out all required fields.");
+                                swal("Please fill out all required fields.","","error");
                                 return;
                             }
                             if(!validateEmail(username)){
-                                alert("Please enter a valid email address.");
+                                swal("Please enter a valid email address.","","error");
                                 return;
                             }
                             try{
@@ -52,15 +54,16 @@ export function SignIn(){
                                     username,
                                     password
                                 })
-                                localStorage.setItem("tokenId", response.data.token)
+                                console.log(response);
+                                localStorage.setItem("tokenId", response.data.tokenId)
                                 navigate('/dashboard')
                             }
                             catch(error){
                                 if (error.response && error.response.status === 403) {
-                                    alert(error.response.data.message);
+                                    swal(error.response.data.message,"","error");
                                 }
                                 else {
-                                    alert('Sign In Failed');
+                                    swal('Sign In Failed','',"error");
                                 }
                         }}} label={"Sign In"}></Button>
                     </div>

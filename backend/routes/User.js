@@ -72,7 +72,6 @@ router.post('/signin',async(req,res)=>{
             username: username
         },jwt_secret)
         req.userId = response._id;
-        console.log(req.userId);
         res.json({
             tokenId
         })
@@ -108,7 +107,6 @@ router.put('/',userMiddleware,async (req,res)=>{
 
 router.get('/bulk',userMiddleware,async (req,res)=>{
     const filter = req.query.filter || "";
-    console.log(req.userId);
     const users = await User.find({
         $or:[{
             firstName: {
