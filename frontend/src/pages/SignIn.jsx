@@ -50,11 +50,10 @@ export function SignIn(){
                                 return;
                             }
                             try{
-                                const response = await axios.post("http://localhost:3000/api/v1/user/signin",{
+                                const response = await axios.post("https://moneywallet-backend-1.onrender.com/api/v1/user/signin",{
                                     username,
                                     password
                                 })
-                                console.log(response);
                                 localStorage.setItem("tokenId", response.data.tokenId)
                                 navigate('/dashboard')
                             }

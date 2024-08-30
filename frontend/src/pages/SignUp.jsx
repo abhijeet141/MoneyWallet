@@ -65,21 +65,20 @@ export function SignUp(){
                                 return;
                             }
                              try {
-                                const response = await axios.post("http://localhost:3000/api/v1/user/signup", {
+                                const response = await axios.post("https://moneywallet-backend-1.onrender.com/api/v1/user/signup", {
                                   firstName,
                                   lastName,
                                   username,
                                   password,
                                 });
-                                if(response.data.message === 'User already exists please SignIn'){
-                                    alert(response.data.message);
+                                if(response.data.message === 'User already exists please login'){
+                                    swal(response.data.message,"","error");
                                     return;
                                 }
-                                console.log(response);
                                 localStorage.setItem("tokenId", response.data.token);
                                 navigate("/dashboard");
                               } catch (error) {
-                                alert("Sign up failed");
+                                swal("Sign up failed","","error");
                               }
                         }} label={"Sign Up"}></Button>
                     </div>
